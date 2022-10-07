@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build . -t scraparr
+docker build . -t ameypar/scraparr
