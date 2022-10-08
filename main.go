@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -51,6 +52,7 @@ func readConfig() Config {
 		log.Fatal(err)
 	}
 
+	fmt.Println(string(fil[:]))
 	var config Config
 	err = yaml.Unmarshal(fil, &config)
 
