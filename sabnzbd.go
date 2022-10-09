@@ -50,7 +50,9 @@ func (sabnzbd Sabnzbd) EmitMetrics(namespace string, subsystem string, frequency
 		Name: "sabnzbd_system_warnings_count",
 		Help: "Number of outstanding warnings reported by Sabnzbd",
 	})
+
 	prometheus.MustRegister(healthGauge)
+	prometheus.MustRegister(systemHealthUnreachable)
 
 	// Periodically record some sample latencies for the three services.
 	go func() {

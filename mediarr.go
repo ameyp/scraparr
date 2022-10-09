@@ -120,6 +120,7 @@ func (self Mediarr) EmitMetrics(namespace string, subsystem string, frequency in
 	})
 	prometheus.MustRegister(systemHealthUnreachable)
 	prometheus.MustRegister(systemStatus)
+	prometheus.MustRegister(queueUnreachable)
 	prometheus.MustRegister(queueUnknownCount)
 	prometheus.MustRegister(queueErrorCount)
 	prometheus.MustRegister(queueWarningCount)

@@ -53,6 +53,8 @@ func (self Prowlarr) EmitMetrics(namespace string, subsystem string, frequency i
 		Name: "prowlarr_system_status_count",
 		Help: "TODO Figure out what this means when it shows up",
 	})
+
+	prometheus.MustRegister(systemHealthUnreachable)
 	prometheus.MustRegister(systemStatus)
 
 	// Periodically record some sample latencies for the three services.
