@@ -25,7 +25,7 @@ func (self Plex) isUp() bool {
 }
 
 func (self Plex) EmitMetrics(namespace string, subsystem string, frequency int) {
-	systemHealthUnreachable := prometheus.NewCounter(prometheus.CounterOpts{
+	systemHealthUnreachable := prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Subsystem: subsystem,
 		Name: "plex_system_health_unreachable_count",
@@ -36,9 +36,9 @@ func (self Plex) EmitMetrics(namespace string, subsystem string, frequency int) 
 	go func() {
 		for {
 			if !self.isUp() {
-				systemHealthUnreachable.Add(1.0)
+				systemHealthUnreachable.Set(1.0)
 			} else {
-				systemHealthUnreachable.Add(0.0)
+				systemHealthUnreachable.Set(0.0)
 			}
 
 			time.Sleep(time.Duration(frequency) * time.Minute)

@@ -38,7 +38,7 @@ func (sabnzbd Sabnzbd) getHealth() (*SabnzbdHealth, error) {
 }
 
 func (sabnzbd Sabnzbd) EmitMetrics(namespace string, subsystem string, frequency int) {
-	systemHealthUnreachable := prometheus.NewCounter(prometheus.CounterOpts{
+	systemHealthUnreachable := prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Subsystem: subsystem,
 		Name: "sabnzbd_system_health_unreachable_count",
@@ -59,9 +59,9 @@ func (sabnzbd Sabnzbd) EmitMetrics(namespace string, subsystem string, frequency
 		for {
 			health, err := sabnzbd.getHealth()
 			if err != nil {
-				systemHealthUnreachable.Add(1.0)
+				systemHealthUnreachable.Set(1.0)
 			} else {
-				systemHealthUnreachable.Add(0.0)
+				systemHealthUnreachable.Set(0.0)
 				healthGauge.Set(float64(health.have_warnings))
 			}
 			time.Sleep(time.Duration(frequency) * time.Minute)

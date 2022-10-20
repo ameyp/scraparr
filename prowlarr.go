@@ -41,7 +41,7 @@ func (self Prowlarr) getHealth() ([]ProwlarrHealth, error) {
 }
 
 func (self Prowlarr) EmitMetrics(namespace string, subsystem string, frequency int) {
-	systemHealthUnreachable := prometheus.NewCounter(prometheus.CounterOpts{
+	systemHealthUnreachable := prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Subsystem: subsystem,
 		Name: "prowlarr_system_health_unreachable_count",
@@ -62,9 +62,9 @@ func (self Prowlarr) EmitMetrics(namespace string, subsystem string, frequency i
 		for {
 			health, err := self.getHealth()
 			if err != nil {
-				systemHealthUnreachable.Add(1.0)
+				systemHealthUnreachable.Set(1.0)
 			} else {
-				systemHealthUnreachable.Add(0.0)
+				systemHealthUnreachable.Set(0.0)
 				systemStatus.Set(float64(len(health)))
 			}
 
